@@ -23,8 +23,8 @@ class CreateUsreDetailsTable extends Migration
             $table->string('thana');
             $table->string('district');
             $table->string('phn_no');
-            $table->integer('NID_no')->unique();
-            $table->dateTime('date_of_birth')->nullable();
+            $table->string('NID_no')->unique();
+            $table->dateTime('date_of_birth');
             $table->timestamps();
         });
     }
