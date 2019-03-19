@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function __construct()
+   /* public function __construct()
     {
         header('Access-Control-Allow-Origin: *');
-    }
+    }*/
 
     /**
      * Display a listing of the resource.
@@ -44,7 +44,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+
         $user = $request->isMethod('put')? User::findOrFail($request->user_id):new User;
 
         $user->id = $request->input('id');
@@ -55,6 +57,17 @@ class UserController extends Controller
 
         $resources= new UserResource($user);
         $userDetails = new UserDetails;
+
+        $request->validate([
+        'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+        $avatarName = $user->id.'_avatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+
+        $request->avatar->storeAs('avatars',$avatarName);
+
+        $user->avatar = $avatarName;
+
         $userDetails->user_id = $resources->id;
         $userDetails->occupation = $request->input('occupation');
         $userDetails->house_no = $request->input('house_no');
@@ -67,9 +80,9 @@ class UserController extends Controller
 
         $userDetails->save();
 
-        /*if ($user->save() && $userDetails->save()){
+        if ($user->save() && $userDetails->save()){
             return new UserResource($user);
-        }*/
+        }
     }
 
     /**

@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('signUp','UserController@store');
 
+
+
+
+Route::post('signUp','UserController@store');
 
 Route::group([
 
-    'middleware' => 'api',
+    'middleware' => ['jwt.verify'],
     'prefix' => 'auth'
 
 ], function ($router) {
