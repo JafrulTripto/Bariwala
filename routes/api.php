@@ -14,11 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group([
+
+], function ($router) {
+
+    Route::post('signUp','UserController@store');
+
+});
 
 
 
 
-Route::post('signUp','UserController@store');
+
 
 Route::group([
 

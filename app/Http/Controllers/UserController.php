@@ -6,15 +6,20 @@ use App\Http\Resources\UserResource;
 use App\User;
 use App\UserDetails;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
 
-   /* public function __construct()
-    {
-        header('Access-Control-Allow-Origin: *');
-    }*/
+//    public function __construct()
+//    {
+//        header("Access-Control-Allow-Origin: *");
+//    }
 
     /**
      * Display a listing of the resource.
@@ -45,8 +50,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-
-
         $user = $request->isMethod('put')? User::findOrFail($request->user_id):new User;
 
         $user->id = $request->input('id');
@@ -58,16 +61,17 @@ class UserController extends Controller
         $resources= new UserResource($user);
         $userDetails = new UserDetails;
 
-        $request->validate([
-        'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+        $file_data = $request->input('image');
+        //generating unique file name;
+        $file_name = 'image_'.time().'.png';
 
-        $avatarName = $user->id.'_avatar'.time().'.'.request()->avatar->getClientOriginalExtension();
+        $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_data));
 
-        $request->avatar->storeAs('avatars',$avatarName);
-
-        $user->avatar = $avatarName;
-
+        if($file_data!=""){
+            // storing image in storage/app/public Folder
+            \Storage::disk('public')->put($file_name,$image_data);
+        }
+        $userDetails->image = $file_name;
         $userDetails->user_id = $resources->id;
         $userDetails->occupation = $request->input('occupation');
         $userDetails->house_no = $request->input('house_no');
