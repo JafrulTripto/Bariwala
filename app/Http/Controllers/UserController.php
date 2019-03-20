@@ -44,32 +44,43 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $user = $request->isMethod('put')? User::findOrFail($request->user_id):new User;
+            $user = $request->isMethod('put') ? User::findOrFail($request->user_id) : new User;
 
-        $user->id = $request->input('id');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password =Hash::make($request->input('password'));
-        $user->save();
+            $user->id = $request->input('id');
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
 
-        $resources= new UserResource($user);
-        $userDetails = new UserDetails;
-        $userDetails->user_id = $resources->id;
-        $userDetails->occupation = $request->input('occupation');
-        $userDetails->house_no = $request->input('house_no');
-        $userDetails->road_no = $request->input('road_no');
-        $userDetails->thana = $request->input('thana');
-        $userDetails->district = $request->input('district');
-        $userDetails->phn_no = $request->input('phn_no');
-        $userDetails->NID_no = $request->input('NID_no');
-        $userDetails->date_of_birth = $request->input('date_of_birth');
+            $resources = new UserResource($user);
+            $userDetails = new UserDetails;
 
-        $userDetails->save();
+            $file_data = $request->input('image');
+            //generating unique file name;
+            $file_name = 'image_' . time() . '.png';
 
-        /*if ($user->save() && $userDetails->save()){
-            return new UserResource($user);
-        }*/
+            $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', 'git', $file_data));
+
+            if ($file_data != "") {
+                // storing image in storage/app/public Folder
+                \Storage::disk('public')->put($file_name, $image_data);
+            }
+            $userDetails->image = $file_name;
+            $userDetails->user_id = $resources->id;
+            $userDetails->occupation = $request->input('occupation');
+            $userDetails->house_no = $request->input('house_no');
+            $userDetails->road_no = $request->input('road_no');
+            $userDetails->thana = $request->input('thana');
+            $userDetails->district = $request->input('district');
+            $userDetails->phn_no = $request->input('phn_no');
+            $userDetails->NID_no = $request->input('NID_no');
+            $userDetails->date_of_birth = $request->input('date_of_birth');
+
+            $userDetails->save();
+
+            if ($user->save() && $userDetails->save()) {
+                return new UserResource($user);
+            }
     }
 
     /**
