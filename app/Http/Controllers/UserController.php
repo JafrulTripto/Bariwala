@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function __construct()
-    {
-        header('Access-Control-Allow-Origin: *');
-    }
+//    public function __construct()
+//    {
+//        header('Access-Control-Allow-Origin: *');
+//    }
 
     /**
      * Display a listing of the resource.
@@ -57,9 +57,9 @@ class UserController extends Controller
 
             $file_data = $request->input('image');
             //generating unique file name;
-            $file_name = 'image_' . time() . '.png';
+            $file_name = 'image_'.$user->name.'_'. time() . '.png';
 
-            $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', 'git', $file_data));
+            $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_data));
 
             if ($file_data != "") {
                 // storing image in storage/app/public Folder

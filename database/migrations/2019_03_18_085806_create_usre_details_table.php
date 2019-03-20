@@ -24,6 +24,7 @@ class CreateUsreDetailsTable extends Migration
             $table->string('district');
             $table->string('phn_no');
             $table->string('NID_no')->unique();
+            $table->string('image')->nullable();
             $table->dateTime('date_of_birth');
             $table->timestamps();
         });
