@@ -8,7 +8,7 @@ class UserDetails extends Model
 {
     //
     protected $fillable = [
-        'occupation', 'house_no	', 'road_no','thana','District','NID_no','date_of_birth'
+        'image','occupation', 'house_no	', 'road_no','thana','District','NID_no','date_of_birth'
     ];
 
     /**

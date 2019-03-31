@@ -22,6 +22,7 @@ class CreateUsreDetailsTable extends Migration
             $table->string('road_no');
             $table->string('thana');
             $table->string('district');
+            $table->string('image');
             $table->string('phn_no');
             $table->string('NID_no')->unique();
             $table->dateTime('date_of_birth');

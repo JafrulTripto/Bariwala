@@ -19,6 +19,7 @@ Route::group([
 ], function ($router) {
 
     Route::post('signUp','UserController@store');
+    Route::post('addEmployee','EmployeeController@store');
 
 });
 
