@@ -7,6 +7,7 @@ use App\User;
 use App\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -28,7 +29,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $data=array();
+        $data=User::with('userDetails')->where('is_admin',0)->get();
+        return \response($data);
     }
 
     /**
@@ -74,7 +77,7 @@ class UserController extends Controller
         }
         $userDetails->image = $file_name;
         $userDetails->user_id = $resources->id;
-        $userDetails->occupation = $request->input('occupation');
+        $userDetails->designation = $request->input('designation');
         $userDetails->house_no = $request->input('house_no');
         $userDetails->road_no = $request->input('road_no');
         $userDetails->thana = $request->input('thana');

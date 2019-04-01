@@ -19,4 +19,6 @@ class UserDetails extends Model
     protected $hidden = [
         'NID_no',
     ];
+
+
 }
