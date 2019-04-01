@@ -6,14 +6,20 @@ use App\Http\Resources\UserResource;
 use App\User;
 use App\UserDetails;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
 
 //    public function __construct()
 //    {
-//        header('Access-Control-Allow-Origin: *');
+//        header("Access-Control-Allow-Origin: *");
 //    }
 
     /**
@@ -23,7 +29,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $data=array();
+        $data=User::with('userDetails')->where('is_admin',0)->get();
+        return \response($data);
     }
 
     /**
@@ -44,43 +52,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-            $user = $request->isMethod('put') ? User::findOrFail($request->user_id) : new User;
 
-            $user->id = $request->input('id');
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->password = Hash::make($request->input('password'));
-            $user->save();
+        $user = $request->isMethod('put')? User::findOrFail($request->user_id):new User;
 
-            $resources = new UserResource($user);
-            $userDetails = new UserDetails;
+        $user->id = $request->input('id');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password =Hash::make($request->input('password'));
+        $user->is_admin = $request->input('is_admin');
+        $user->save();
 
-            $file_data = $request->input('image');
-            //generating unique file name;
-            $file_name = 'image_'.$user->name.'_'. time() . '.png';
+        $resources= new UserResource($user);
+        $userDetails = new UserDetails;
 
-            $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_data));
+        $file_data = $request->input('image');
+        //generating unique file name;
+        $file_name = 'image_'.time().'.png';
 
-            if ($file_data != "") {
-                // storing image in storage/app/public Folder
-                \Storage::disk('public')->put($file_name, $image_data);
-            }
-            $userDetails->image = $file_name;
-            $userDetails->user_id = $resources->id;
-            $userDetails->occupation = $request->input('occupation');
-            $userDetails->house_no = $request->input('house_no');
-            $userDetails->road_no = $request->input('road_no');
-            $userDetails->thana = $request->input('thana');
-            $userDetails->district = $request->input('district');
-            $userDetails->phn_no = $request->input('phn_no');
-            $userDetails->NID_no = $request->input('NID_no');
-            $userDetails->date_of_birth = $request->input('date_of_birth');
+        $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_data));
 
-            $userDetails->save();
+        if($file_data!=""){
+            // storing image in storage/app/public Folder
+            \Storage::disk('public')->put($file_name,$image_data);
+        }
+        $userDetails->image = $file_name;
+        $userDetails->user_id = $resources->id;
+        $userDetails->designation = $request->input('designation');
+        $userDetails->house_no = $request->input('house_no');
+        $userDetails->road_no = $request->input('road_no');
+        $userDetails->thana = $request->input('thana');
+        $userDetails->district = $request->input('district');
+        $userDetails->phn_no = $request->input('phn_no');
+        $userDetails->NID_no = $request->input('NID_no');
+        $userDetails->date_of_birth = $request->input('date_of_birth');
 
-            if ($user->save() && $userDetails->save()) {
-                return new UserResource($user);
-            }
+        $userDetails->save();
+
+        if ($user->save() && $userDetails->save()){
+            return new UserResource($user);
+        }
     }
 
     /**

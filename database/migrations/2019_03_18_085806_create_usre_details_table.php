@@ -17,14 +17,14 @@ class CreateUsreDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('occupation');
+            $table->string('designation');
             $table->string('house_no');
             $table->string('road_no');
             $table->string('thana');
             $table->string('district');
+            $table->string('image');
             $table->string('phn_no');
             $table->string('NID_no')->unique();
-            $table->string('image')->nullable();
             $table->dateTime('date_of_birth');
             $table->timestamps();
         });

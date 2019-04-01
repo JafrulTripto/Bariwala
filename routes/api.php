@@ -14,7 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('signUp','UserController@store');
+Route::group([
+
+], function ($router) {
+
+    Route::post('addEmployee','UserController@store');
+    Route::get('showEmployee','UserController@index');
+
+
+});
+
+
+
+
 
 
 Route::group([
