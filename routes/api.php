@@ -19,6 +19,7 @@ Route::group([
 ], function ($router) {
 
     Route::post('addEmployee','UserController@store');
+    Route::post('deleteEmployee','UserController@destroy');
     Route::get('showEmployee','UserController@index');
 
 

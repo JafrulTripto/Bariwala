@@ -17,7 +17,7 @@ class UserDetails extends Model
      * @var array
      */
     protected $hidden = [
-        'NID_no',
+
     ];
 
 

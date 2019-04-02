@@ -133,8 +133,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $data=User::with('userDetails')->findOrFail($request->id);
+
+        if ($data->delete()) {
+            $data = User::paginate(10);
+
+            return UserResource::collection($data);
+        }
     }
 }
