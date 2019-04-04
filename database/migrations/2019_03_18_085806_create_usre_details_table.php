@@ -18,10 +18,7 @@ class CreateUsreDetailsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('designation');
-            $table->string('house_no');
-            $table->string('road_no');
-            $table->string('thana');
-            $table->string('district');
+            $table->string('address');
             $table->string('image');
             $table->string('phn_no');
             $table->string('NID_no')->unique();
