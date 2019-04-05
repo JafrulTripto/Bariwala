@@ -78,10 +78,7 @@ class UserController extends Controller
         $userDetails->image = $file_name;
         $userDetails->user_id = $resources->id;
         $userDetails->designation = $request->input('designation');
-        $userDetails->house_no = $request->input('house_no');
-        $userDetails->road_no = $request->input('road_no');
-        $userDetails->thana = $request->input('thana');
-        $userDetails->district = $request->input('district');
+        $userDetails->address = $request->input('address');
         $userDetails->phn_no = $request->input('phn_no');
         $userDetails->NID_no = $request->input('NID_no');
         $userDetails->date_of_birth = $request->input('date_of_birth');
@@ -133,8 +130,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $data=User::with('userDetails')->findOrFail($request->id);
+
+        if ($data->delete()) {
+            $data = User::paginate(10);
+
+            return UserResource::collection($data);
+        }
     }
 }
