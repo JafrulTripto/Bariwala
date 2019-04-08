@@ -21,8 +21,10 @@ Route::group([
     Route::post('addEmployee','UserController@store');
     Route::post('deleteEmployee','UserController@destroy');
     Route::get('showEmployee','UserController@index');
-
-
+    Route::post('addRole','RoleController@store');
+    Route::get('showRoles','RoleController@index');
+    Route::post('addUnit','UnitController@store');
+    Route::get('showUnits','UnitController@index');
 });
 
 
