@@ -14,7 +14,7 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = EmpRole::select('id','role_name')->get();
+        $roles = EmpRole::select('id','role_name')->orderBy('id','asc')->get();
 
         return \response($roles);
     }
@@ -25,6 +25,18 @@ class RoleController extends Controller
         $newRole->role_name = $request->input('role_name');
         if ($newRole->save()){
             return response($newRole);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        //
+        $data=EmpRole::findOrFail($request->id);
+
+        if ($data->delete()) {
+            $data = EmpRole::paginate(10);
+
+            return response($data);
         }
     }
 }
