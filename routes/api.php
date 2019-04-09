@@ -20,11 +20,18 @@ Route::group([
 
     Route::post('addEmployee','UserController@store');
     Route::post('deleteEmployee','UserController@destroy');
+    Route::post('addSupplier','SupplierController@store');
+    Route::get('showSuppliers','SupplierController@index');
     Route::get('showEmployee','UserController@index');
     Route::post('addRole','RoleController@store');
     Route::get('showRoles','RoleController@index');
+    Route::post('deleteRole','RoleController@destroy');
     Route::post('addUnit','UnitController@store');
     Route::get('showUnits','UnitController@index');
+    Route::post('deleteUnit','UnitController@destroy');
+    Route::get('showCategories','CategoryController@index');
+    Route::post('addCategory','CategoryController@store');
+    Route::post('deleteCategory','CategoryController@destroy');
 });
 
 
