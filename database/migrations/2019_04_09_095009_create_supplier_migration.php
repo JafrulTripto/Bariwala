@@ -15,11 +15,12 @@ class CreateSupplierMigration extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->string('sup_name');
             $table->string('sup_email');
             $table->string('sup_contactPerson');
             $table->string('sup_contactPhoneNo');
-            $table->string('category');
             $table->timestamps();
         });
     }
