@@ -32,6 +32,7 @@ Route::group([
     Route::get('showCategories','CategoryController@index');
     Route::post('addCategory','CategoryController@store');
     Route::post('deleteCategory','CategoryController@destroy');
+    Route::post('addProduct','ProductController@store');
 });
 
 

@@ -10,7 +10,7 @@ class SupplierController extends Controller
     //
     public function index()
     {
-        $suppliers = Supplier::select('id','sup_name','sup_email','category','sup_contactPerson','sup_contactPhoneNo')->orderBy('id','asc')->get();
+        $suppliers = Supplier::with('category')->orderBy('id','asc')->get();
 
         return \response($suppliers);
     }
@@ -22,7 +22,7 @@ class SupplierController extends Controller
         $supplier->sup_email = $request->input('email');
         $supplier->sup_contactPerson = $request->input('contactPerson');
         $supplier->sup_contactPhoneNo = $request->input('phn_no');
-        $supplier->category = $request->input('category');
+        $supplier->category_id = $request->input('category');
         if ($supplier->save()){
             return response($supplier);
         }
