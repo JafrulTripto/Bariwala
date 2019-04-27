@@ -18,7 +18,7 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('addEmployee','UserController@store');
+    Route::post('addEmployee','EmployeeController@store');
     Route::post('deleteEmployee','UserController@destroy');
     Route::post('addSupplier','SupplierController@store');
     Route::get('showSuppliers','SupplierController@index');
