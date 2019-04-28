@@ -22,22 +22,23 @@ class CreateEmployeeEmailTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('employee_email_id');
-            $table->integer('employees_employees_id')->unsigned();
-            $table->integer('emails_emails_id')->unsigned();
+            $table->increments('id');
+            $table->integer('employees_id')->unsigned();
+            $table->integer('emails_id')->unsigned();
+            $table->timestamps();
 
-            $table->index(["emails_emails_id"], 'fk_employee_email_emails1_idx');
+            $table->index(["emails_id"], 'fk_employee_email_emails1_idx');
 
-            $table->index(["employees_employees_id"], 'fk_employee_email_employees1_idx');
+            $table->index(["employees_id"], 'fk_employee_email_employees1_idx');
 
 
-            $table->foreign('employees_employees_id', 'fk_employee_email_employees1_idx')
+            $table->foreign('employees_id', 'fk_employee_email_employees1_idx')
                 ->references('id')->on('employees')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('emails_emails_id', 'fk_employee_email_emails1_idx')
-                ->references('emails_id')->on('emails')
+            $table->foreign('emails_id', 'fk_employee_email_emails1_idx')
+                ->references('id')->on('emails')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

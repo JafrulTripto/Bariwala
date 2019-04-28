@@ -22,9 +22,9 @@ Route::group([
     Route::post('deleteEmployee','UserController@destroy');
     Route::post('addSupplier','SupplierController@store');
     Route::get('showSuppliers','SupplierController@index');
-    Route::get('showEmployee','UserController@index');
-    Route::post('addRole','RoleController@store');
-    Route::get('showRoles','RoleController@index');
+    Route::get('showEmployee','EmployeeController@index');
+    Route::post('addDesignation','Employee_designationController@store');
+    Route::get('showDesignation','Employee_designationController@index');
     Route::post('deleteRole','RoleController@destroy');
     Route::post('addUnit','UnitController@store');
     Route::get('showUnits','UnitController@index');

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Email;
 use App\Employee;
 use App\Employee_designation;
+use App\Employee_email;
 use App\Employee_image;
 use App\Employees_address;
+use App\Employees_phoneNo;
 use App\Http\Resources\UserResource;
 use App\Image;
+use App\Phone_numbers;
 use App\UserDetails;
 use Illuminate\Http\Request;
 
@@ -44,9 +48,10 @@ class EmployeeController extends Controller
     {
 
         $employee = new Employee();
-
+        $employee->designation_id = $request->input('designation');
         $employee->employees_first_name = $request->input('first_name');
         $employee->employees_last_name = $request->input('last_name');
+        $employee->employees_nid = $request->input('NID_no');
         $employee->employees_dob = $request->input('date_of_birth');
 
         if ($employee->save()){
@@ -58,6 +63,8 @@ class EmployeeController extends Controller
             $address->address_thana = $request->input('thana');
             $address->address_district = $request->input('district');
             $address->save();
+            $emp_address = new Employees_address();
+            $emp_address->address_id = $address->id;
 
             $image = new Image();
             $file_data = $request->input('image');
@@ -69,15 +76,27 @@ class EmployeeController extends Controller
                 \Storage::disk('public')->put($file_name,$image_data);
             }
             $image->image_link = $file_name;
+            $image->save();
             $emp_image = new Employee_image();
-            $emp_address = new Employees_address();
-            $emp_address->address_address_id = $address->id;
-            $emp_designation = new Employee_designation();
-            $emp_designation->employee_designation_name = $request->input('designation');
+            $emp_image->image_id = $image->id;
+
+            $phone_no = new Phone_numbers();
+            $phone_no->phone_number = $request->input('phn_no');
+            $phone_no->save();
+            $emp_phn = new Employees_phoneNo();
+            $emp_phn->phone_numbers_id = $phone_no->id;
+
+            $email = new Email();
+            $email->emails_address = $request->input('email');
+            $email->save();
+            $emp_email = new Employee_email();
+            $emp_email->emails_id = $email->id;
+
             $emp = Employee::findOrFail($employee->id);
-            $emp->designation()->save($emp_designation);
             $emp->save_address()->save($emp_address);
-            //$emp->save_image()->save($emp_image);
+            $emp->save_image()->save($emp_image);
+            $emp->phone()->save($emp_phn);
+            $emp->emails()->save($emp_email);
         }
 
     }

@@ -22,7 +22,7 @@ class CreateEmailsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('emails_id');
+            $table->increments('id');
             $table->string('emails_address', 225)->nullable();
             $table->timestamps();
 

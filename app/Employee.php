@@ -19,7 +19,7 @@ class Employee extends Model
 
     ];
     public function save_address(){
-        return $this->hasOne('App\Employees_Address','employees_employees_id');
+        return $this->hasOne('App\Employees_Address','employees_id');
     }
     public function save_image(){
         return $this->hasOne('App\Employee_image');
@@ -27,4 +27,11 @@ class Employee extends Model
     public function designation(){
         return $this->hasOne('App\Employee_designation');
     }
+    public function phone(){
+        return $this->hasOne('App\Employees_phoneNo','employees_id');
+    }
+    public function emails(){
+        return $this->hasOne('App\Employee_email','employees_id');
+    }
+
 }

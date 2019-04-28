@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhoneNumbersTable extends Migration
+class CreateSuppliersTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'phone_numbers';
+    public $tableName = 'suppliers';
 
     /**
      * Run the migrations.
-     * @table phone_numbers
+     * @table suppliers
      *
      * @return void
      */
@@ -22,8 +22,8 @@ class CreatePhoneNumbersTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('phone_numbers_id');
-            $table->string('phone_number', 45)->nullable();
+            $table->increments('id');
+            $table->string('suppliers_name', 45)->nullable();
             $table->timestamps();
         });
     }

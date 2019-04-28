@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeDesignationTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employee_designation';
+    public $tableName = 'users';
 
     /**
      * Run the migrations.
-     * @table employee_designation
+     * @table users
      *
      * @return void
      */
@@ -23,17 +23,11 @@ class CreateEmployeeDesignationTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('employee_id')->unsigned();
-            $table->string('employee_designation_name', 45)->nullable();
+            $table->string('user_name', 45);
+            $table->string('password', 255);
+            $table->string('email', 45)->nullable();
+            $table->boolean('is_admin')->default(0);
             $table->timestamps();
-
-            $table->index(["employee_id"], 'fk_employee_designation_employees1_idx');
-
-
-            $table->foreign('employee_id', 'fk_employee_designation_employees1_idx')
-                ->references('id')->on('employees')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 

@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductTable extends Migration
+class CreateEmployeeImageTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'product';
+    public $tableName = 'employee_image';
 
     /**
      * Run the migrations.
-     * @table product
+     * @table employee_image
      *
      * @return void
      */
@@ -22,14 +22,18 @@ class CreateProductTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('product_id');
-            $table->string('product_name', 45);
-            $table->string('product_barcode', 45);
-            $table->string('product_buying_price', 45)->nullable();
-            $table->string('product_selling_price', 45)->nullable();
+            $table->increments('employee_id')->unsigned();
+            $table->integer('image_id')->unsigned();
             $table->timestamps();
 
-            $table->unique(["product_barcode"], 'product_barcode_UNIQUE');
+
+            $table->index(["image_id"], 'fk_employee_image_image1_idx');
+
+
+            $table->foreign('image_id', 'fk_employee_image_image1_idx')
+                ->references('id')->on('image')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

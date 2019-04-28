@@ -22,22 +22,23 @@ class CreateProductCategoryTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('product_category_id');
-            $table->integer('product_product_id')->unsigned();
-            $table->integer('category_category_id')->unsigned();
+            $table->increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+            $table->timestamps();
 
-            $table->index(["product_product_id"], 'fk_product_category_product1_idx');
+            $table->index(["product_id"], 'fk_product_category_product1_idx');
 
-            $table->index(["category_category_id"], 'fk_product_category_category1_idx');
+            $table->index(["category_id"], 'fk_product_category_category1_idx');
 
 
-            $table->foreign('category_category_id', 'fk_product_category_category1_idx')
-                ->references('category_id')->on('category')
+            $table->foreign('category_id', 'fk_product_category_category1_idx')
+                ->references('id')->on('category')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('product_product_id', 'fk_product_category_product1_idx')
-                ->references('product_id')->on('product')
+            $table->foreign('product_id', 'fk_product_category_product1_idx')
+                ->references('id')->on('product')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

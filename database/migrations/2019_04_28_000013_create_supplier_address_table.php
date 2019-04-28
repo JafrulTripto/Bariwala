@@ -22,22 +22,23 @@ class CreateSupplierAddressTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('supplier_address_id');
-            $table->integer('suppliers_suppliers_id')->unsigned();
-            $table->integer('address_address_id')->unsigned();
+            $table->increments('id');
+            $table->integer('suppliers_id')->unsigned();
+            $table->integer('address_id')->unsigned();
+            $table->timestamps();
 
-            $table->index(["address_address_id"], 'fk_supplier_has_address_address1_idx');
+            $table->index(["address_id"], 'fk_supplier_has_address_address1_idx');
 
-            $table->index(["suppliers_suppliers_id"], 'fk_supplier_has_address_suppliers1_idx');
+            $table->index(["suppliers_id"], 'fk_supplier_has_address_suppliers1_idx');
 
 
-            $table->foreign('suppliers_suppliers_id', 'fk_supplier_has_address_suppliers1_idx')
-                ->references('suppliers_id')->on('suppliers')
+            $table->foreign('suppliers_id', 'fk_supplier_has_address_suppliers1_idx')
+                ->references('id')->on('suppliers')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('address_address_id', 'fk_supplier_has_address_address1_idx')
-                ->references('address_id')->on('address')
+            $table->foreign('address_id', 'fk_supplier_has_address_address1_idx')
+                ->references('id')->on('address')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

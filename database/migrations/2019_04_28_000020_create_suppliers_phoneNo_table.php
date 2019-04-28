@@ -22,22 +22,23 @@ class CreateSuppliersPhonenoTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('suppliers_phoneNo_id');
-            $table->integer('suppliers_suppliers_id')->unsigned();
-            $table->integer('phone_numbers_phone_numbers_id')->unsigned();
+            $table->increments('id');
+            $table->integer('suppliers_id')->unsigned();
+            $table->integer('phone_numbers_id')->unsigned();
+            $table->timestamps();
 
-            $table->index(["suppliers_suppliers_id"], 'fk_suppliers_phoneNo_suppliers1_idx');
+            $table->index(["suppliers_id"], 'fk_suppliers_phoneNo_suppliers1_idx');
 
-            $table->index(["phone_numbers_phone_numbers_id"], 'fk_suppliers_phoneNo_phone_numbers1_idx');
+            $table->index(["phone_numbers_id"], 'fk_suppliers_phoneNo_phone_numbers1_idx');
 
 
-            $table->foreign('suppliers_suppliers_id', 'fk_suppliers_phoneNo_suppliers1_idx')
-                ->references('suppliers_id')->on('suppliers')
+            $table->foreign('suppliers_id', 'fk_suppliers_phoneNo_suppliers1_idx')
+                ->references('id')->on('suppliers')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('phone_numbers_phone_numbers_id', 'fk_suppliers_phoneNo_phone_numbers1_idx')
-                ->references('phone_numbers_id')->on('phone_numbers')
+            $table->foreign('phone_numbers_id', 'fk_suppliers_phoneNo_phone_numbers1_idx')
+                ->references('id')->on('phone_numbers')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

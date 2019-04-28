@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductImageTable extends Migration
+class CreateUsersEmployeesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'product_image';
+    public $tableName = 'users_employees';
 
     /**
      * Run the migrations.
-     * @table product_image
+     * @table users_employees
      *
      * @return void
      */
@@ -22,22 +22,23 @@ class CreateProductImageTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('product_image_id');
-            $table->integer('product_product_id')->unsigned();
-            $table->integer('image_image_id')->unsigned();
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('employees_id')->unsigned();
+            $table->timestamps();
 
-            $table->index(["image_image_id"], 'fk_product_image_image1_idx');
+            $table->index(["employees_id"], 'fk_user_has_employees_employees1_idx');
 
-            $table->index(["product_product_id"], 'fk_product_image_product1_idx');
+            $table->index(["user_id"], 'fk_user_has_employees_user_idx');
 
 
-            $table->foreign('product_product_id', 'fk_product_image_product1_idx')
-                ->references('product_id')->on('product')
+            $table->foreign('user_id', 'fk_user_has_employees_user_idx')
+                ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('image_image_id', 'fk_product_image_image1_idx')
-                ->references('image_id')->on('image')
+            $table->foreign('employees_id', 'fk_user_has_employees_employees1_idx')
+                ->references('id')->on('employees')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
