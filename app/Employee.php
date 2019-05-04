@@ -28,7 +28,7 @@ class Employee extends Model
         return $this->hasOne('App\Employee_designation');
     }
     public function phone(){
-        return $this->hasOne('App\Employees_phoneNo','employees_id');
+        return $this->hasOne('App\Employees_phoneNo','employee_id');
     }
     public function emails(){
         return $this->hasOne('App\Employee_email','employees_id');

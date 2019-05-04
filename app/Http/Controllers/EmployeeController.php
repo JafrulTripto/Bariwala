@@ -25,7 +25,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $data=Employee::get();
+        return \response($data);
     }
 
     /**

@@ -10,7 +10,7 @@ class CreateEmployeesPhonenoTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employees_phoneNo';
+    public $tableName = 'employees_phone';
 
     /**
      * Run the migrations.

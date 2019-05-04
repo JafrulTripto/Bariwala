@@ -29,8 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=array();
-        $data=User::with('userDetails')->where('is_admin',0)->get();
+        $data=User::get();
         return \response($data);
     }
 

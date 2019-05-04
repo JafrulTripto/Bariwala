@@ -23,6 +23,7 @@ Route::group([
     Route::post('addSupplier','SupplierController@store');
     Route::get('showSuppliers','SupplierController@index');
     Route::get('showEmployee','EmployeeController@index');
+    Route::get('showUser','UserController@index');
     Route::post('addDesignation','Employee_designationController@store');
     Route::get('showDesignation','Employee_designationController@index');
     Route::post('deleteRole','RoleController@destroy');
